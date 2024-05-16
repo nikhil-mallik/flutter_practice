@@ -6,7 +6,7 @@ import '../constants/appRoutes.constant.dart';
 class HomeUI extends StatelessWidget {
   const HomeUI({super.key});
 
-  Widget showButtonCard(String name, VoidCallback onTap, BuildContext context) {
+  Widget showButtonCard(BuildContext context, String name, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0, left: 10.0, bottom: 5.0),
       child: InkWell(
@@ -45,8 +45,10 @@ class HomeUI extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            showButtonCard('Device Info',
-                () => Get.toNamed(AppRoutes.DEVICE_INFO), context)
+            showButtonCard(context, 'Device Info',
+                () => Get.toNamed(AppRoutes.DEVICE_INFO)),
+            showButtonCard(context, 'Google Sign In',
+                () => Get.toNamed(AppRoutes.GOOGLE_SIGN_IN))
           ],
         ),
       ),
