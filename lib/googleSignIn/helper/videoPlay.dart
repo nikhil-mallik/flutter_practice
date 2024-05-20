@@ -3,7 +3,7 @@ import 'package:video_player/video_player.dart';
 
 class videoplay extends StatefulWidget {
   String url;
-  videoplay({
+  videoplay({super.key, 
     required this.url,
   });
 
@@ -20,6 +20,7 @@ class _videoplayState extends State<videoplay> {
   });
   VideoPlayerController? _controller;
 
+  @override
   void initState() {
     _controller = VideoPlayerController.network(
       url,

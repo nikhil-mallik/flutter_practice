@@ -17,7 +17,7 @@ class upload extends StatefulWidget {
   String did;
   String type;
   String url;
-  upload({
+  upload({super.key, 
     required this.did,
     required this.type,
     required this.url,
@@ -57,7 +57,7 @@ class _uploadState extends State<upload> {
   void initState() {
     if (type == 'PDF') {
       ft = ['pdf'];
-      ic = Icon(
+      ic = const Icon(
         Icons.picture_as_pdf,
         color: Color.fromARGB(255, 181, 0, 45),
         size: 40,
@@ -65,7 +65,7 @@ class _uploadState extends State<upload> {
     }
     if (type == 'Image') {
       ft = ['jpg', 'png'];
-      ic = Icon(
+      ic = const Icon(
         Icons.image,
         color: Color.fromARGB(255, 0, 91, 181),
         size: 40,
@@ -73,7 +73,7 @@ class _uploadState extends State<upload> {
     }
     if (type == 'video') {
       ft = ['"avi", "flv", "mkv", "mov", "mp4", "mpeg", "webm", "wmv"'];
-      ic = Icon(
+      ic = const Icon(
         Icons.play_circle,
         color: Color.fromARGB(255, 181, 0, 45),
         size: 50,
@@ -86,7 +86,7 @@ class _uploadState extends State<upload> {
   @override
   Widget build(BuildContext context) {
     User? user = _auth.currentUser;
-    final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
+    final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
         .collection('folders')
@@ -104,7 +104,7 @@ class _uploadState extends State<upload> {
               //       .doc(did)
 
               var catalogues = ref
-                  .doc(user!.uid)
+                  .doc(user.uid)
                   .collection('folders')
                   .doc(did)
                   .collection(type)
@@ -112,7 +112,7 @@ class _uploadState extends State<upload> {
               catalogues.then((value) => value.docs.remove(value));
 
               ref
-                  .doc(user!.uid)
+                  .doc(user.uid)
                   .collection('folders')
                   .doc(did)
                   .delete()
@@ -120,7 +120,7 @@ class _uploadState extends State<upload> {
                 Get.toNamed(AppRoutes.GOOGLE_DASHBOARD);
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.delete_forever,
               color: Color.fromARGB(255, 181, 0, 45),
             ),
@@ -135,7 +135,7 @@ class _uploadState extends State<upload> {
         ),
         title: Row(
           children: [
-            Text(
+            const Text(
               'Web',
               style: TextStyle(
                 color: Colors.white,
@@ -155,7 +155,7 @@ class _uploadState extends State<upload> {
       body: Stack(
         children: [
           StreamBuilder<QuerySnapshot>(
-            stream: _usersStream,
+            stream: usersStream,
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -207,13 +207,13 @@ class _uploadState extends State<upload> {
                       leading: ic,
                       title: Text(data['name']),
                       trailing: IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.delete,
                           color: Color.fromARGB(255, 255, 0, 64),
                         ),
                         onPressed: () {
                           ref
-                              .doc(user!.uid)
+                              .doc(user.uid)
                               .collection('folders')
                               .doc(did)
                               .collection(type)
@@ -244,7 +244,7 @@ class _uploadState extends State<upload> {
           getfile();
           // _showMyDialog();
         },
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),
@@ -256,17 +256,17 @@ class _uploadState extends State<upload> {
       context: context, barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Create a folder'),
+          title: const Text('Create a folder'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: title,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'folder name',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],
@@ -323,7 +323,7 @@ class _uploadState extends State<upload> {
       url1 = await snapshot.ref.getDownloadURL();
 
       // print(url);
-      if (url1 != null && file != null) {
+      if (file != null) {
         User? user = _auth.currentUser;
         ref.doc(user!.uid).collection('folders').doc(did).collection(type).add({
           'url': url1,

@@ -49,16 +49,14 @@ class LoginController extends GetxController {
         .doc(user!.uid)
         .get();
 
-    if (dataBase != null) {
-      ref.doc(user.uid).set({
-        'name': name.value,
-        'url': photoURL.value,
-        'email': email.value,
-        'userId': userId.value,
+    ref.doc(user.uid).set({
+      'name': name.value,
+      'url': photoURL.value,
+      'email': email.value,
+      'userId': userId.value,
 
-      });
+    });
     }
-  }
 
 
 

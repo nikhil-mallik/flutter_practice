@@ -10,7 +10,7 @@ import '../../constants/appRoutes.constant.dart';
 class DashboardUI extends StatelessWidget {
   DashboardUI({super.key});
 
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final _auth = FirebaseAuth.instance;
   TextEditingController title = TextEditingController();
   CollectionReference ref = FirebaseFirestore.instance.collection('Users');
@@ -27,7 +27,7 @@ class DashboardUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = _auth.currentUser;
-    final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
+    final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
         .collection('folders')
@@ -188,6 +188,8 @@ class DashboardUI extends StatelessWidget {
                 TextFormField(
                   controller: title,
                   validator: (value) {
+                    return null;
+                  
                     // return value.isNotEmpty ? null : "Enter any text";
                   },
                   decoration:
